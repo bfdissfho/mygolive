@@ -1,0 +1,51 @@
+// ==UserScript==
+// @name         go live section
+// @namespace    http://tampermonkey.net/
+// @version      2024-10-03
+// @description  try to take over the world!
+// @author       You
+// @match        https://golive-asia.thaiticketmajor.com/booking/prww/zones.php?query=*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=thaiticketmajor.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+
+    const sections = ['210', '215', '209'];
+
+    function clickSeatsAvailableButton() {
+        const seatsAvailableButton = document.getElementById('popup-avail');
+
+        if (seatsAvailableButton) {
+            seatsAvailableButton.click(); // Click the button
+            console.log("Seats Available button clicked");
+        }
+    }
+
+
+    // Function to randomly select a section
+    function randomClickSection() {
+        // Filter to ensure only available sections are clicked
+        const availableSections = sections.filter(sectionId => {
+            const row = document.querySelector(`tr[onclick*="${sectionId}"]`);
+            return row && row.querySelector('td a.txt-link.txt-green'); // Check if the section is available
+        });
+
+        if (availableSections.length > 0) {
+            // Randomly select a section from the available ones
+            const randomSection = availableSections[Math.floor(Math.random() * availableSections.length)];
+            const rowToClick = document.querySelector(`tr[onclick*="${randomSection}"]`);
+            if (rowToClick) {
+                rowToClick.click(); // Click the randomly selected section
+                console.log(`Clicked on section: ${randomSection}`);
+            }
+        } else {
+            console.log("No available sections to click.");
+        }
+    }
+
+    // Call the function to click a random section
+    setTimeout(clickSeatsAvailableButton, 2000)
+    setTimeout(randomClickSection, 5000)
+
+})();
