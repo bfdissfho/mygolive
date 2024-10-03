@@ -5,6 +5,8 @@
 // @description  try to take over the world!
 // @author       You
 // @match        https://golive-asia.thaiticketmajor.com/booking/prww/zones.php?query=*
+// @downloadURL  https://raw.githubusercontent.com/bfdissfho/mygolive/refs/heads/main/go_live_section
+// @updateURL    https://raw.githubusercontent.com/bfdissfho/mygolive/refs/heads/main/go_live_section
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=thaiticketmajor.com
 // @grant        none
 // ==/UserScript==
