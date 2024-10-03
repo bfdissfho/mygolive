@@ -6,6 +6,8 @@
 // @author       You
 // @match        https://golive-asia.thaiticketmajor.com/booking/prww/fixed.php?*
 // @match        https://golive-asia.thaiticketmajor.com/booking/prww/festival.php?*
+// @downloadURL  https://raw.githubusercontent.com/bfdissfho/mygolive/refs/heads/main/go_live_seat
+// @updateURL    https://raw.githubusercontent.com/bfdissfho/mygolive/refs/heads/main/go_live_seat
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=thaiticketmajor.com
 // @grant        none
 // ==/UserScript==
