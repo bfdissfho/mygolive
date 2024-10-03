@@ -1,0 +1,103 @@
+// ==UserScript==
+// @name         go live seat
+// @namespace    http://tampermonkey.net/
+// @version      2024-10-03
+// @description  try to take over the world!
+// @author       You
+// @match        https://golive-asia.thaiticketmajor.com/booking/prww/fixed.php?*
+// @match        https://golive-asia.thaiticketmajor.com/booking/prww/festival.php?*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=thaiticketmajor.com
+// @grant        none
+// ==/UserScript==
+
+(function() {
+    const want_quan = 4
+
+    function clickFourConsecutiveSeats() {
+        const rows = document.querySelectorAll('#tableseats tbody tr');
+        let firstRowSkipped = false;
+
+        for (let i = 0; i < rows.length; i++) {
+            const seats = rows[i].querySelectorAll('td');
+
+            // Check for four consecutive available seats
+            let consecutiveCount = 0;
+            const seatIdsToClick = [];
+
+            for (let j = 0; j < seats.length; j++) {
+                const seat = seats[j];
+
+                // Check if the seat is available
+                if (seat.classList.contains('not-available')) {
+                    consecutiveCount = 0; // Reset count on not available seat
+                    seatIdsToClick.length = 0; // Clear the array
+                } else {
+                    consecutiveCount++;
+                    const seatElement = seat.querySelector('div.seatuncheck');
+
+                    // Ensure the seat element exists
+                    if (seatElement) {
+                        seatIdsToClick.push(seatElement.id); // Store seat ID
+                    }
+
+                    // If we found 4 consecutive available seats
+                    if (consecutiveCount === want_quan) {
+                        if (!firstRowSkipped) {
+                            // Skip the first row with 4 available seats
+                            console.log(`Row ${i + 1} has 4 available seats, skipping...`);
+                            firstRowSkipped = true; // Mark that the first row was skipped
+                            break; // Exit the seat loop for this row
+                        } else {
+                            // Click the available seats in the next row
+                            console.log(`Row ${i + 1} has 4 available seats: ${seatIdsToClick.join(', ')}`);
+                            seatIdsToClick.forEach((seatId, index) => {
+                                const seatElement = document.getElementById(seatId);
+                                if (seatElement) {
+                                    setTimeout(() => {
+                                        seatElement.click(); // Click each available seat with a delay
+                                    }, index * 500); // 500 ms delay between clicks
+                                }
+                            });
+                            return; // Exit after clicking
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log("No available rows with 4 consecutive seats found.");
+    }
+
+    function selectQuantity() {
+        const selectBox = document.getElementById('book_cnt');
+
+        if (selectBox) {
+            selectBox.value = want_quan.toString()
+            // Dispatch an input event to notify any listeners
+            const event = new Event('change', { bubbles: true });
+            selectBox.dispatchEvent(event);
+            console.log("Selected quantity: 4");
+        } else {
+            console.log("Select box not found");
+        }
+    }
+
+
+
+    function clickBookNowButton() {
+        const bookNowButton = document.getElementById('booknow');
+
+        if (bookNowButton) {
+            bookNowButton.click(); // Click the button
+            console.log("Book Now button clicked");
+        } else {
+            console.log("Book Now button not found");
+        }
+    }
+
+    // Call the function to find and click seats
+    setTimeout(selectQuantity, 2500)
+    setTimeout(clickFourConsecutiveSeats, 3000)
+    setTimeout(clickBookNowButton, 6000)
+
+})();
