@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         go live seat
 // @namespace    http://tampermonkey.net/
-// @version      2024-10-03
+// @version      2024-10-04
 // @description  try to take over the world!
 // @author       You
 // @match        https://golive-asia.thaiticketmajor.com/booking/prww/fixed.php?*
@@ -20,7 +20,7 @@
         let firstRowSkipped = false;
 
         for (let i = 0; i < rows.length; i++) {
-            const seats = rows[i].querySelectorAll('td');
+            const seats = rows[i].querySelectorAll('td:not(.headrow)');
 
             // Check for four consecutive available seats
             let consecutiveCount = 0;
@@ -45,12 +45,14 @@
                     // If we found 4 consecutive available seats
                     if (consecutiveCount === want_quan) {
                         if (!firstRowSkipped) {
+console.log(seatIdsToClick)
                             // Skip the first row with 4 available seats
                             console.log(`Row ${i + 1} has 4 available seats, skipping...`);
                             firstRowSkipped = true; // Mark that the first row was skipped
                             break; // Exit the seat loop for this row
                         } else {
                             // Click the available seats in the next row
+console.log(seatIdsToClick)
                             console.log(`Row ${i + 1} has 4 available seats: ${seatIdsToClick.join(', ')}`);
                             seatIdsToClick.forEach((seatId, index) => {
                                 const seatElement = document.getElementById(seatId);
