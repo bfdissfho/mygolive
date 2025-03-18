@@ -13,7 +13,7 @@
 
 (function() {
 
-    const sections = ['210', '215', '209'];
+    const sections = ['307', '318', '301', '302', '303', '319', '306', '320', '405', '419', '401', '402', '403', '420', '404'];
 
     function clickSeatsAvailableButton() {
         const seatsAvailableButton = document.getElementById('popup-avail');
