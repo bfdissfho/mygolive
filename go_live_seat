@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         go live seat
 // @namespace    http://tampermonkey.net/
-// @version      2024-10-04
+// @version      2025-03-18
 // @description  try to take over the world!
 // @author       You
 // @match        https://golive-asia.thaiticketmajor.com/booking/prww/fixed.php?*
@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 (function() {
-    const want_quan = 4
+    const want_quan = 6
 
     function clickFourConsecutiveSeats() {
         const rows = document.querySelectorAll('#tableseats tbody tr');
